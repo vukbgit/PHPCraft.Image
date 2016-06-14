@@ -11,14 +11,42 @@ use Imagine;
  */
 class ImagineAdapter implements ImageInterface
 {
+    protected $image;
+    protected $sourcePath;
+    
     /**
      * Opens image
-     *
      * @param string $imageLibrary GD, Imagick,...
-     * @param string $path from application-root
+     * @param string $sourcePath from application-root
+     **/
+    public function open($imageLibrary, $sourcePath)
+    {
+        $this->sourcePath = $sourcePath;
+        $qualifiedClassName = '\Imagine\\' . $imageLibrary . '\Imagine';
+        $image = new $qualifiedClassName();
+        $this->image = $image->open($this->sourcePath);
+    }
+    
+    /**
+     * Resizes image keeping ratio
+     * @param int $width
+     * @param int $height
+     * @param string $path from application-root to save to
+     * @param bool $keepRatio
      * @return mixed adapted library instance 
      **/
-    public function open($imageLibrary, $path)
+    public function resize($width, $height, $path = null, $keepRatio = true)
     {
+        if(!$path) $path = $this->sourcePath;
+        // keep ratio
+        if($keepRatio) {
+            $transformation = new Imagine\Filter\Transformation();
+            $transformation->thumbnail(new Imagine\Image\Box($width, $height))
+                ->save($path);
+            $transformation->apply($this->image);
+        } else {
+        //deforming resize
+            $this->image->resize(new \Imagine\Image\Box($width, $height))->save($path);
+        }
     }
 }

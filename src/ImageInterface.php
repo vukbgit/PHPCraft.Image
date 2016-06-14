@@ -9,13 +9,23 @@ namespace PHPCraft\Image;
  */
 interface ImageInterface
 {
+    
     /**
      * Opens image
      *
      * @param string $imageLibrary GD, Imagick,...
-     * @param string $path from application-root
+     * @param string $sourcePath from application-root
      * @return mixed adapted library instance 
      **/
-    public function open($imageLibrary, $path);
+    public function open($imageLibrary, $sourcePath);
     
+    /**
+     * Resizes image keeping ratio
+     *
+     * @param int $width
+     * @param int $height
+     * @param string $path from application-root to save to
+     * @param bool $keepRatio
+     **/
+    public function resize($width, $height, $path = null, $keepRatio = true);
 }
