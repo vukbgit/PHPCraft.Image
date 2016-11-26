@@ -40,8 +40,8 @@ class ImagineAdapter implements ImageInterface
         // keep ratio
         if($keepRatio) {
             $transformation = new Imagine\Filter\Transformation();
-            $transformation->thumbnail(new Imagine\Image\Box($width, $height))
-                ->save($path);
+            //$transformation->thumbnail(new Imagine\Image\Box($width, $height))->save($path);
+            $transformation->thumbnail(new Imagine\Image\Box($width, $height));
             $transformation->apply($this->image);
         } else {
         //deforming resize
@@ -72,6 +72,19 @@ class ImagineAdapter implements ImageInterface
      **/
     public function crop($x, $y, $width, $height)
     {
-        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($this->sourcePath);
+        //$this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($this->sourcePath);
+        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height));
+    }
+    
+    /**
+     * crops a rectangle
+     * @param int $x of upper left corner
+     * @param int $y of upper left corner
+     * @param int $width
+     * @param int $height
+     **/
+    public function save()
+    {
+        $this->image->save($this->sourcePath);
     }
 }
