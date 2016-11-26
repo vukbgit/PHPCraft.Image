@@ -42,7 +42,7 @@ class ImagineAdapter implements ImageInterface
             $transformation = new Imagine\Filter\Transformation();
             //$transformation->thumbnail(new Imagine\Image\Box($width, $height))->save($path);
             $transformation->thumbnail(new Imagine\Image\Box($width, $height));
-            $transformation->apply($this->image);
+            $transformation->apply($this->image)->save($path);
         } else {
         //deforming resize
             $this->image->resize(new \Imagine\Image\Box($width, $height))->save($path);
@@ -72,8 +72,7 @@ class ImagineAdapter implements ImageInterface
      **/
     public function crop($x, $y, $width, $height)
     {
-        //$this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($this->sourcePath);
-        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height));
+        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($this->sourcePath);
     }
     
     /**
