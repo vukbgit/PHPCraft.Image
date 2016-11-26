@@ -54,7 +54,7 @@ class ImagineAdapter implements ImageInterface
      * @param int $x of upper left corner
      * @param int $y of upper left corner
      **/
-    public function cropSquare($x, $y)
+    public function cropSquare($x = 0, $y = 0)
     {
         $imageBox = $this->image->getSize();
         $width = $imageBox->getWidth();
