@@ -33,7 +33,6 @@ class ImagineAdapter implements ImageInterface
      * @param int $height
      * @param string $path from application-root to save to
      * @param bool $keepRatio
-     * @return mixed adapted library instance 
      **/
     public function resize($width, $height, $path = null, $keepRatio = true)
     {
@@ -48,5 +47,31 @@ class ImagineAdapter implements ImageInterface
         //deforming resize
             $this->image->resize(new \Imagine\Image\Box($width, $height))->save($path);
         }
+    }
+    
+    /**
+     * crops a square
+     * @param int $x of upper left corner
+     * @param int $y of upper left corner
+     **/
+    public function cropSquare($x, $y)
+    {
+        $imageBox = $this->image->getSize();
+        $width = $imageBox->getWidth();
+        $height = $imageBox->getHeight();
+        $side = $width <= $height ? $width : $height;
+        $this->crop($x, $y, $side, $side);
+    }
+    
+    /**
+     * crops a rectangle
+     * @param int $x of upper left corner
+     * @param int $y of upper left corner
+     * @param int $width
+     * @param int $height
+     **/
+    public function crop($x, $y, $width, $height)
+    {
+        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($path);
     }
 }
