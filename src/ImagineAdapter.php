@@ -72,6 +72,6 @@ class ImagineAdapter implements ImageInterface
      **/
     public function crop($x, $y, $width, $height)
     {
-        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($path);
+        $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($this->sourcePath);
     }
 }
