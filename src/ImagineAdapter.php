@@ -73,4 +73,17 @@ class ImagineAdapter implements ImageInterface
     {
         $this->image->crop(new \Imagine\Image\Point($x, $y),new \Imagine\Image\Box($width, $height))->save($this->sourcePath);
     }
+    
+    /**
+     * Rotates image
+     * @param int $angle rotation angle
+     * @param string $path from application-root to save to
+     **/
+    public function rotate($angle, $path = null)
+    {
+        if(!$path) $path = $this->sourcePath;
+        $transformation = new Imagine\Filter\Transformation();
+        $transformation->rotate($angle);
+        $transformation->apply($this->image)->save($path);
+    }
 }
